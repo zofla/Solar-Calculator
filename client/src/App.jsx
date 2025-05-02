@@ -5,7 +5,7 @@ import './styles.css';
 function App() {
   return (
     <div className="App">
-      <h1>Solar Investment Calculator</h1>
+      <h1>Alfred's Solar Calculator v1</h1>
       <Calculator />
     </div>
   );
