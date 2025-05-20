@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const { fetchLoadProfiles } = require('./sheets');
+const { fetchLoadProfiles, fetchAppliances } = require('./sheets');
 require('dotenv').config();
 
 const app = express();
@@ -13,11 +13,23 @@ app.get('/api/load-profiles', async (req, res) => {
   const range = `${category}!A2:E100`;
 
   try {
-    const { appliances, subCategories } = await fetchLoadProfiles(spreadsheetId, range);
+    const { subCategories } = await fetchLoadProfiles(spreadsheetId, range);
+    const appliances = subCategories.flatMap(sc => sc.appliances);
     res.json({ appliances, subCategories });
   } catch (error) {
     console.error('Error fetching profiles:', error);
     res.status(500).json({ error: 'Failed to fetch load profiles' });
+  }
+});
+
+app.get('/api/appliances', async (req, res) => {
+  const spreadsheetId = '1aXlwDBKyThgIeZF1U21CjpL0-mxzSXd58LH_mYCKCPI';
+  try {
+    const data = await fetchAppliances(spreadsheetId);
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching appliances:', error);
+    res.status(500).json({ error: 'Failed to fetch appliances' });
   }
 });
 
