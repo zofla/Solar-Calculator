@@ -6,8 +6,8 @@ A web app to calculate solar investment returns using React (front-end) and Node
 1. Clone: `git clone https://github.com/zofla/Solar-Calculator.git`
 2. Install: `cd client && npm install && cd ../server && npm install`
 3. Add `server/.env` with `SPREADSHEET_ID` and `GOOGLE_APPLICATION_CREDENTIALS`.
-4. Run: `cd server && npm run dev`, then `cd client && npm run dev`
-5. Open: `http://localhost:5173`
+4. Run: `cd backend && uvicorn main:app --reload --port=8000, then cd server && npm run dev, then cd client && npm run dev`
+5. Open: `http://localhost:3000`
 
 ## Contributing
 - Create a branch: `git checkout -b feature/your-feature`

@@ -29,6 +29,7 @@ async function fetchLoadProfiles(spreadsheetId, range) {
         name: row[2] || '',
         power: parseFloat(row[3]) || 0,
         hours: parseFloat(row[4]) || 0,
+        quantity: parseFloat(row[5]) || 0,
       });
     }
   });
@@ -51,7 +52,7 @@ async function fetchAppliances(spreadsheetId) {
   const sheets = google.sheets({ version: 'v4', auth });
   const res = await sheets.spreadsheets.values.get({
     spreadsheetId,
-    range: 'Appliances!A1:C',
+    range: 'Appliances!A1:D',
   });
 
   const rows = res.data.values || [];
@@ -59,6 +60,7 @@ async function fetchAppliances(spreadsheetId) {
     name: row[0] || '',
     power: parseFloat(row[1]) || 0,
     hours: parseFloat(row[2]) || 0,
+    quantity: parseFloat(row[3]) || 0,
   }));
 
   return { appliances };

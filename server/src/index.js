@@ -10,7 +10,7 @@ app.use(express.json());
 app.get('/api/load-profiles', async (req, res) => {
   const { category } = req.query;
   const spreadsheetId = '1aXlwDBKyThgIeZF1U21CjpL0-mxzSXd58LH_mYCKCPI';
-  const range = `${category}!A2:E100`;
+  const range = `${category}!A2:F100`;
 
   try {
     const { subCategories } = await fetchLoadProfiles(spreadsheetId, range);
@@ -37,7 +37,7 @@ app.post('/api/calculate', (req, res) => {
   const { appliances, batteryType } = req.body;
 
   const totalPower = appliances.reduce((sum, app) => sum + (app.power || 0), 0);
-  const totalEnergy = appliances.reduce((sum, app) => sum + (app.power || 0) * (app.hours || 0), 0);
+  const totalEnergy = appliances.reduce((sum, app) => sum + (app.power || 0) * (app.hours || 0) * (app.quantity || 0), 0);
 
   let battery = {};
   const inverterEfficiency = 0.9;
