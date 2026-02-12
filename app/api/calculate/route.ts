@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
       const batteriesInSeries = nominalVoltage / 12;
       const batteryRows = Math.ceil(batteryAh / 220);
       const totalBatteries = batteriesInSeries * batteryRows;
-      const batteryCost = 420000 * totalBatteries;
+      const batteryCost = 350000 * totalBatteries;
 
       battery = {
         total: totalBatteries,
@@ -41,21 +41,21 @@ export async function POST(req: NextRequest) {
     } else {
       const dod = 0.8;
       const energyAdjustedDod = energyAdjusted / dod;
-      const capacities = [5.12, 7.2, 10, 12.5, 15, 17.5, 20, 25].map(
+      const capacities = [5.12, 7.2, 10.49, 12.5, 14.33, 16.07, 20, 25].map(
         (c) => c * 1000
       );
       let capacityRequired =
         capacities.find((c) => c >= energyAdjustedDod) ||
         capacities[capacities.length - 1];
       const prices: Record<number, number> = {
-        5120: 1438000,
-        7200: 2137000,
-        10000: 3420000,
-        12500: 3994000,
-        15000: 4080000,
-        17500: 5335000,
-        20000: 5682000,
-        25000: 5682000,
+        5120: 1113000,
+        7200: 1539071,
+        10490: 2213000,
+        12500: 2394109,
+        14330: 2559000,
+        16070: 2923000,
+        20000: 3300000,
+        25000: 3700000,
       };
       const totalBatteries = Math.ceil(energyAdjustedDod / capacityRequired);
       const batteryCost =
@@ -91,7 +91,7 @@ export async function POST(req: NextRequest) {
     const safetyFactor = 0.8;
     const loadAdjusted = totalPower / safetyFactor;
     const inverterCapacities = [
-      1, 2.5, 3, 3.5, 5, 6, 7.5, 8, 10, 15, 20,
+      1, 1.5, 2.5, 3, 3.3, 5, 6, 7.5, 8, 10, 12, 15, 20,
     ].map((c) => c * 1000);
     let inverterRating =
       inverterCapacities.find((c) => c >= loadAdjusted) ||
@@ -99,16 +99,18 @@ export async function POST(req: NextRequest) {
 
     const inverterPrices: Record<number, number> = {
       1000: 180000,
-      2500: 384000,
-      3000: 420000,
-      3500: 474000,
-      5000: 683000,
-      6000: 750000,
-      7500: 783000,
-      8000: 900000,
-      10000: 1356000,
+      1500: 310000,
+      2500: 359333,
+      3000: 384000,
+      3300: 436000,
+      5000: 534000,
+      6000: 589000,
+      7500: 736000,
+      8000: 785000,
+      10000: 1014000,
+      12000: 1243000,
       15000: 1450000,
-      20000: 3150000,
+      20000: 2000000,
     };
     const totalInverters = Math.ceil(loadAdjusted / inverterRating);
     const inverterCost =
